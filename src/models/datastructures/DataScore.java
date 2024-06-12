@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * See klass on edetabeli jaoks
  *
- * @param gameTime    Mägu lõpu aeg (mis kuupäeval ja kellaajal mäng lõppes)
+ * @param gameTime    Mängu lõpu aeg (mis kuupäeval ja kellaajal mäng lõppes)
  * @param playerName  Mängija nimi
  * @param word        Äraarvatav sõna
  * @param missedChars Valesti sisestatud märgid
