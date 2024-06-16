@@ -1,14 +1,21 @@
 package listeners;
 
+import models.Database;
 import models.Model;
+import models.datastructures.DataWords;
 import views.View;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ButtonNew implements ActionListener {
+    private static final Logger LOGGER = Logger.getLogger((ButtonNew.class.getName()));
     private Model model;
     private View view;
+
     public ButtonNew(Model model, View view) {
         this.model = model;
         this.view = view;
@@ -29,5 +36,16 @@ public class ButtonNew implements ActionListener {
         }
 
         // TODO siit jätkub kodutöö  (umbes kaks rida koodi, üks meetod, juhusliksõna, mis andmebaasist võetakse)
+        DataWords word = new Database(model).selectRandomWord(model.getSelectedCategory());
+        if (word != null) {
+            // Initialize the game state with the new word
+            LOGGER.log(Level.INFO, "Selected random word: " + word.word());
+            model.startNewGame(word.word());
+            view.setFirstPicture();
+            view.getGameBoard().displayWord(word.word());
+        } else {
+            // Handle the case where no word was found
+            JOptionPane.showMessageDialog(view, "Valitud kategooriast sõna, mida kuvada, ei ole.");
+        }
     }
 }

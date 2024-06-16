@@ -1,6 +1,7 @@
 package app;
 
 import controllers.Controller;
+import models.Database;
 import models.Model;
 import views.View;
 
@@ -23,6 +24,7 @@ public class MainApp {
      */
     private void initializeUI(String dbName) {
         Model model = new Model(dbName);
+
         View view = new View(model); // Loome JFrame ja kõik JPanel ja sinna peale minevad JComponents
         new Controller(model, view);
 

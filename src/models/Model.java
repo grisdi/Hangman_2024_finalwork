@@ -4,10 +4,7 @@ import models.datastructures.DataScore;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Model {
     private final String chooseCategory = "Kõik kategooriad";
@@ -38,6 +35,9 @@ public class Model {
      * Edetabeli andmed
      */
     private List<DataScore> dataScores = new ArrayList<>();
+    private String currentWord;
+    private char[] guessedChars;
+    private List<Character> wrongGuesses;
 
     public Model(String dbName) {
         if(dbName != null) {
@@ -57,6 +57,19 @@ public class Model {
         }
         Collections.sort(imageFiles);  // Kui vaja pilte sorteerida suurenevas järjekorras, siis saab seda kasutada
         // System.out.println(imageFiles);  // näitab konsoolis faili teed iga pildi puhul. Hetkel on õigesti sorditud.
+    }
+
+    /**
+     * Uue mängu seadistus
+     * @param word sõna asendamine alakriipsudega
+     */
+    public void startNewGame(String word) {
+        this.currentWord = word;
+        this.guessedChars = new char[word.length()];
+        Arrays.fill(guessedChars, '_');
+        this.wrongGuesses = new ArrayList<>();
+        System.out.println("New game started with word: " + word);
+        System.out.println("Initialized guessedChars: " + Arrays.toString(guessedChars));
     }
 
     /**
@@ -153,5 +166,17 @@ public class Model {
      */
     public void setDataScores(List<DataScore> dataScores) {
         this.dataScores = dataScores;
+    }
+
+
+    public char[] getGuessedChars() {
+        return guessedChars;
+    }
+
+    public List<Character> getWrongGuesses() {
+        return wrongGuesses;
+    }
+    public String getCurrentWord() {
+        return currentWord;
     }
 }

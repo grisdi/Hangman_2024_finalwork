@@ -9,6 +9,7 @@ import views.panels.LeaderBoard;
 import views.panels.Settings;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 
@@ -37,7 +38,7 @@ public class View extends JFrame {
      * Sellele paneelile tulevad kolm eelnevalt loodud vahelehte (Settings, GameBoard ja LeaderBoard)
      */
     private JTabbedPane tabbedPane;
-    // TODO RealTimer ka
+
     private GameTimer gameTimer;
     private RealTimer realTimer;
 
@@ -132,6 +133,8 @@ public class View extends JFrame {
     }
 
     public void updateScoresTable() {
+        DefaultTableModel dtm = model.getDtm();
+        dtm.setRowCount(0);
         for(DataScore ds : model.getDataScores()) {
             String gameTime = ds.gameTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
             // System.out.println(gameTime);  // Test
@@ -153,5 +156,13 @@ public class View extends JFrame {
         int min = seconds / 60;
         int sec = seconds % 60;
         return String.format("%02d:%02d", min, sec);
+    }
+
+    /**
+     * Kuvab uue mängu puhul pildi nr 1
+     */
+    public void setFirstPicture() {
+        ImageIcon imageIcon = new ImageIcon(model.getImageFiles().get(0));
+        getGameBoard().getLblImage().setIcon(imageIcon);
     }
 }

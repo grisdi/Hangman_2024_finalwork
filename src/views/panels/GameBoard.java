@@ -6,17 +6,19 @@ import models.Model;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class GameBoard extends JPanel {
     /**
      * Klassisisene mudel, mille väärtus saadakse View konstruktorist ja loodud MainApp-is
      */
-    private Model model;
+    private final Model model;
     /**
      * GridBagLayout jaoks JComponent paigutamiseks "Excel" variandis
      */
-    private GridBagConstraints gbc = new GridBagConstraints();
+    private final GridBagConstraints gbc = new GridBagConstraints();
     /**
      * See silt (JLabel) näitab mängu aega kujul: mm:ss
      */
@@ -105,7 +107,7 @@ public class GameBoard extends JPanel {
         };
         txtChar.setEnabled(false); // Vaikimisi lahtrisse kirjuta ei saa
         txtChar.setHorizontalAlignment(JTextField.CENTER); // Kirjuta lahtri keskele
-        // TODO siia rida, et tekstikasti saab ainult ühe tähe kirjutada
+
         txtChar.setDocument(new TextFieldLimit(1));  // Saab sisestada vaid ühe tähe tekstikasti
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -132,6 +134,12 @@ public class GameBoard extends JPanel {
         gbc.gridy = 3;
         components.add(btnCancel, gbc);
 
+        txtChar.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               btnSend.doClick();
+            }
+        });
     }
 
     /**
@@ -175,6 +183,44 @@ public class GameBoard extends JPanel {
         lblResult.setFont(new Font("Courier New", Font.BOLD, 24)); // Kirjastiil ja suurus äraarvataval sõnal
         pnlResult.add(lblResult); // See paneel (pnlResult) on FlowLayout mitte GridBagLayout!
     }
+
+    public void displayWord(String word) {
+        StringBuilder underscores = new StringBuilder();
+        for (char c : word.toCharArray()) {
+            underscores.append("_ ");
+        }
+        lblResult.setText(underscores.toString().trim());
+    }
+
+    /**
+     * Mängulaua uuendamine
+     */
+    public void updateGameBoard() {
+        System.out.println("Updating game board...");
+        if (model.getGuessedChars() == null) {
+            System.out.println("Guessed chars array is null!");
+            return;
+        }
+
+        if (model.getWrongGuesses() == null) {
+            System.out.println("Wrong guesses list is null!");
+            return;
+        }
+
+        System.out.println("Current guessed chars: " + Arrays.toString(model.getGuessedChars()));
+        System.out.println("Wrong guesses: " + model.getWrongGuesses());
+
+        lblResult.setText(new String(model.getGuessedChars()).replace("", " ").trim());
+        lblError.setText("Vigased tähed: " + model.getWrongGuesses().toString());
+
+        int wrongGuessCount = model.getWrongGuesses().size();
+        if (wrongGuessCount < model.getImageFiles().size()) {
+            lblImage.setIcon(new ImageIcon(model.getImageFiles().get(wrongGuessCount)));
+        } else {
+            System.out.println("Index out of bounds for image files!");
+        }
+    }
+
 
     // Komponentide getterid
 
