@@ -20,13 +20,9 @@ public class Model {
     private String selectedCategory; // Vaikimisi valitud kategooria
     private String [] cmbCategories;  // Rippmenüü sisu
     /**
-     * Kaust, kus on võllapuu pildid
-     */
-    private String imagesFolder = "images";
-    /**
      * Siia pannakse kõik võllapuu pildid õiges järjekorras (00-12)
      */
-    private List<String> imageFiles = new ArrayList<>();
+    private final List<String> imageFiles = new ArrayList<>();
     /**
      * Tabeli mugavaks kasutamiseks
      */
@@ -50,6 +46,10 @@ public class Model {
     }
 
     private void readImagesFolder() {
+        /*
+          Kaust, kus on võllapuu pildid
+         */
+        String imagesFolder = "images";
         File folder = new File(imagesFolder);  // Loo kausta ombejkt (jah, File)
         File[] files = folder.listFiles();  // Loe kõik failid File objekt listi
         for(File file : Objects.requireNonNull(files)) {
@@ -68,8 +68,10 @@ public class Model {
         this.guessedChars = new char[word.length()];
         Arrays.fill(guessedChars, '_');
         this.wrongGuesses = new ArrayList<>();
-        System.out.println("New game started with word: " + word);
-        System.out.println("Initialized guessedChars: " + Arrays.toString(guessedChars));
+    }
+
+    public String getWrongGuessesAsString() {
+        return getWrongGuesses().toString().replaceAll("[\\[\\]]", "");
     }
 
     /**
@@ -86,14 +88,6 @@ public class Model {
      */
     public String getDatabaseFile() {
         return databaseFile;
-    }
-
-    /**
-     * Seadistab uue andmebaasi failinime, kui see saadi käsurealt
-     * @param databaseFile uus andmebaasi failinimi
-     */
-    public void setDatabaseFile(String databaseFile) {
-        this.databaseFile = databaseFile;
     }
 
     /**

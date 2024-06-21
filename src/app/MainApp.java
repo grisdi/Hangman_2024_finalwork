@@ -1,7 +1,6 @@
 package app;
 
 import controllers.Controller;
-import models.Database;
 import models.Model;
 import views.View;
 
@@ -24,10 +23,8 @@ public class MainApp {
      */
     private void initializeUI(String dbName) {
         Model model = new Model(dbName);
-
         View view = new View(model); // Loome JFrame ja kõik JPanel ja sinna peale minevad JComponents
-        new Controller(model, view);
-
+        new Controller(model,view);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // JFRame sulgemis nupu tegevus (Sulge)
         view.pack(); // "Raputa" komponendid paika
         view.setLocationRelativeTo(null); // JFRame asukoht (ekraani keskel)
@@ -39,19 +36,16 @@ public class MainApp {
      * @param args käsurealt loetavad argumendid (teise andmebaasi kasutamine)
      */
     public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                String dbName = null;
-                if(args.length >= 1) {  // Käsureal on lisa infot
-                    File file = new File(args[0]);  // Teeme käsureal stringi File objektiks
-                    if(file.exists() && !file.isDirectory()) {  // Kas fail on olemas ja ei ole kaust
-                        dbName = args[0];  // Rakendusele uus andmebaasi fail
-                    }
+        SwingUtilities.invokeLater(() -> {
+            String dbName = null;
+            if(args.length >= 1){ // Käsureal on lisa infot (meid huvitab esimene)
+                File file = new File(args[0]); // Teeme käsureal stringi File objektiks
+                if(file.exists() && !file.isDirectory()){
+                    // Fail olemas ja pole kaust
+                    dbName = args[0]; // Rakendusele uus andmebaasi fail
                 }
-                new MainApp(dbName);
             }
+            new MainApp(dbName);
         });
     }
 }

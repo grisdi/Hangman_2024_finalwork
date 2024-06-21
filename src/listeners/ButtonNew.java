@@ -8,13 +8,15 @@ import views.View;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ButtonNew implements ActionListener {
-    private static final Logger LOGGER = Logger.getLogger((ButtonNew.class.getName()));
-    private Model model;
-    private View view;
+    static {
+        Logger.getLogger((ButtonNew.class.getName()));
+    }
+
+    private final Model model;
+    private final View view;
 
     public ButtonNew(Model model, View view) {
         this.model = model;
@@ -39,7 +41,6 @@ public class ButtonNew implements ActionListener {
         DataWords word = new Database(model).selectRandomWord(model.getSelectedCategory());
         if (word != null) {
             // Initialize the game state with the new word
-            LOGGER.log(Level.INFO, "Selected random word: " + word.word());
             model.startNewGame(word.word());
             view.setFirstPicture();
             view.getGameBoard().displayWord(word.word());

@@ -26,11 +26,11 @@ public class GameTimer {
      * Java sisseehitatud klass aja jaoks Swing mitte util!
      * <a href="https://docs.oracle.com/javase/8/docs/api/javax/swing/Timer.html">Timer dokumentatsioon</a>
      */
-    private Timer timer;
+    private final Timer timer;
 
     /**
      * Mänguaja kontruktor. See objekt luuakse alati uuesti, kui mäng algab
-     * @param view
+     * @param view muutub algseks
      */
     public GameTimer(View view) {
         this.minutes = 0; // Alg väärtustamine

@@ -26,15 +26,15 @@ public class LeaderBoard extends JPanel {
     /**
      * Tabeli päis, mida näeb Edetabeli vahelehel
      */
-    private String[] heading = new String[]{"Kuupäev", "Nimi", "Sõnad", "Tähed", "Mänguaeg"};
+    private final String[] heading = new String[]{"Kuupäev", "Nimi", "Sõnad", "Tähed", "Mänguaeg"};
     /**
      * Loome tabeli teostuse päisega, kuid andmeid pole
      */
-    private DefaultTableModel dtm = new DefaultTableModel(heading, 0);
+    private final DefaultTableModel dtm = new DefaultTableModel(heading, 0);
     /**
      * Loome tabeli dtm baasil
      */
-    private JTable table = new JTable(dtm);
+    private final JTable table = new JTable(dtm);
 
 
 
@@ -61,7 +61,7 @@ public class LeaderBoard extends JPanel {
         JScrollPane sp = new JScrollPane(table);
         add(sp, BorderLayout.CENTER);
 
-        // Tabeku esunebe veerg 120px
+        // Tabeli esimene veerg 120px
         table.getColumnModel().getColumn(0).setPreferredWidth(120);
 
         // Tabeli sisu pole muudetav 1990817 <-- stackocerflow

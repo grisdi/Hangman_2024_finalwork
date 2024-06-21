@@ -7,8 +7,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 public class GameBoard extends JPanel {
     /**
@@ -150,7 +148,7 @@ public class GameBoard extends JPanel {
         lblImage = new JLabel();
         // TODO pildid mällu lugemata, seega võllapuud ei näe vaid värviline pildikast. Asendada temporaryImage() õigega
         // ImageIcon imageIcon = new ImageIcon(temporaryImage()); // Sulgude osa täita õigesti ja pilt on maagiliselt näha
-        ImageIcon imageIcon = new ImageIcon(model.getImageFiles().get(model.getImageFiles().size()-1)); // Sulgude osa täita õigesti ja pilt on maagiliselt näha
+        ImageIcon imageIcon = new ImageIcon(model.getImageFiles().getLast()); // Sulgude osa täita õigesti ja pilt on maagiliselt näha
         lblImage.setIcon(imageIcon);
 
         gbc.gridx = 2; // Kolmas veerg
@@ -158,20 +156,6 @@ public class GameBoard extends JPanel {
         gbc.gridheight = 4; // Label üle 4 või 5 rea kõrge (vajab mängimist)
         components.add(lblImage, gbc);
 
-    }
-
-    /**
-     * Tegemist on ajutise pildiga kuna piltide kausta (images) pole algselt loetud
-     * @return pilt suurusega 125x125 punase värviga
-     * <a href="https://stackoverflow.com/questions/47137636/swing-new-imageicon-from-color">Viide õpetusele</a>
-     */
-    private BufferedImage temporaryImage() {
-        BufferedImage image = new BufferedImage(125, 125, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = image.createGraphics();
-
-        graphics.setPaint(new Color(255, 0, 0));
-        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-        return image;
     }
 
     /**
@@ -186,7 +170,7 @@ public class GameBoard extends JPanel {
 
     public void displayWord(String word) {
         StringBuilder underscores = new StringBuilder();
-        for (char c : word.toCharArray()) {
+        for (char _ : word.toCharArray()) {
             underscores.append("_ ");
         }
         lblResult.setText(underscores.toString().trim());
@@ -196,29 +180,23 @@ public class GameBoard extends JPanel {
      * Mängulaua uuendamine
      */
     public void updateGameBoard() {
-        System.out.println("Updating game board...");
-        if (model.getGuessedChars() == null) {
-            System.out.println("Guessed chars array is null!");
-            return;
+
+        StringBuilder displayWord = new StringBuilder();
+        for (char c : model.getGuessedChars()) {
+            displayWord.append(c).append(' ');
         }
+        lblResult.setText(displayWord.toString().trim());
 
-        if (model.getWrongGuesses() == null) {
-            System.out.println("Wrong guesses list is null!");
-            return;
-        }
+        // Update the wrong guesses label
+        lblError.setText("Vigased tähed: " + model.getWrongGuessesAsString());
 
-        System.out.println("Current guessed chars: " + Arrays.toString(model.getGuessedChars()));
-        System.out.println("Wrong guesses: " + model.getWrongGuesses());
+        // Update the hangman image
+        int imageIndex = Math.min(model.getWrongGuesses().size(), model.getImageFiles().size() - 1);
+        lblImage.setIcon(new ImageIcon(model.getImageFiles().get(imageIndex)));
 
-        lblResult.setText(new String(model.getGuessedChars()).replace("", " ").trim());
-        lblError.setText("Vigased tähed: " + model.getWrongGuesses().toString());
-
-        int wrongGuessCount = model.getWrongGuesses().size();
-        if (wrongGuessCount < model.getImageFiles().size()) {
-            lblImage.setIcon(new ImageIcon(model.getImageFiles().get(wrongGuessCount)));
-        } else {
-            System.out.println("Index out of bounds for image files!");
-        }
+        // Reset the input field
+        txtChar.setText("");
+        txtChar.requestFocus();
     }
 
 
@@ -230,10 +208,6 @@ public class GameBoard extends JPanel {
 
     public JTextField getTxtChar() {
         return txtChar;
-    }
-
-    public JLabel getLblError() {
-        return lblError;
     }
 
     public JButton getBtnSend() {
@@ -248,7 +222,4 @@ public class GameBoard extends JPanel {
         return lblImage;
     }
 
-    public JLabel getLblResult() {
-        return lblResult;
-    }
 }

@@ -12,11 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonScores implements ActionListener {
-    private Model model;
-    private View view;
-    private String[] header = new String[] {"Kuupäev", "Nimi", "Sõna", "Tähed", "Mänguaeg"};
-    private DefaultTableModel dtm = new DefaultTableModel(header,0);
-    private JTable table = new JTable(dtm);
+    private final Model model;
+    private final View view;
+    private final String[] header = new String[] {"Kuupäev", "Nimi", "Sõna", "Tähed", "Mänguaeg"};
+    private final DefaultTableModel dtm = new DefaultTableModel(header,0);
+    private final JTable table = new JTable(dtm);
     private JDialog dialogScore;
 
     public ButtonScores(Model model, View view) {
@@ -47,7 +47,7 @@ public class ButtonScores implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         new Database(model).selectScores();
-        if (model.getDataScores().size() > 0) {
+        if (!model.getDataScores().isEmpty()) {
             view.updateScoresTable();
             dialogScore.setVisible(true);
         } else {

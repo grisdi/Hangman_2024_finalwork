@@ -19,16 +19,6 @@ public record DataWords(int id, String word, String category) {
     }
 
     /**
-     * Unikaalne id
-     *
-     * @return sõna unikaalse id
-     */
-    @Override
-    public int id() {
-        return id;
-    }
-
-    /**
      * Sõna
      *
      * @return tagastab äraarvatava sõna
@@ -38,13 +28,4 @@ public record DataWords(int id, String word, String category) {
         return word;
     }
 
-    /**
-     * Kategooria
-     *
-     * @return tagastab sõna kategooria
-     */
-    @Override
-    public String category() {
-        return category;
-    }
 }

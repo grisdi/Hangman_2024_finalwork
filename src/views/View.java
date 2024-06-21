@@ -21,26 +21,25 @@ public class View extends JFrame {
     /**
      * Klassisisene, mille väärtus saadakse VIew konstruktorist ja loodud MainApp-is
      */
-    private Model model;
+    private final Model model;
     /**
      * Vaheleht (TAB) Seaded ehk avaleht
      */
-    private Settings settings;
+    private final Settings settings;
     /**
      * Vaheleht (TAB) Mängulaud
      */
-    private GameBoard gameBoard;
+    private final GameBoard gameBoard;
     /**
      * Vaheleht (TAB) Edetabel
      */
-    private LeaderBoard leaderBoard;
+    private final LeaderBoard leaderBoard;
     /**
      * Sellele paneelile tulevad kolm eelnevalt loodud vahelehte (Settings, GameBoard ja LeaderBoard)
      */
     private JTabbedPane tabbedPane;
 
-    private GameTimer gameTimer;
-    private RealTimer realTimer;
+    private final GameTimer gameTimer;
 
     /**
      * View konstruktor. Põhiakna (JFrame) loomine ja sinna paneelide (JPanel) lisamine ja JComponendid
@@ -67,7 +66,7 @@ public class View extends JFrame {
         // Loome mänguaja objekti
         gameTimer = new GameTimer(this);
         // Loome ja "käivitame" päris aja
-        realTimer = new RealTimer(this);
+        RealTimer realTimer = new RealTimer(this);
         realTimer.start();
     }
 
@@ -120,10 +119,6 @@ public class View extends JFrame {
         return gameBoard;
     }
 
-    public LeaderBoard getLeaderBoard() {
-        return leaderBoard;
-    }
-
     /**
      * mänguaja objekt .stop() .setRunning() jne
      * @return mänguaja objekt
@@ -162,7 +157,7 @@ public class View extends JFrame {
      * Kuvab uue mängu puhul pildi nr 1
      */
     public void setFirstPicture() {
-        ImageIcon imageIcon = new ImageIcon(model.getImageFiles().get(0));
+        ImageIcon imageIcon = new ImageIcon(model.getImageFiles().getFirst());
         getGameBoard().getLblImage().setIcon(imageIcon);
     }
 }
