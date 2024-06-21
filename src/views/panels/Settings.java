@@ -31,8 +31,7 @@ public class Settings extends JPanel {
      */
     private JButton btnNewGame;
     /**
-     * TODO Selle nupu vajalikkus on küsimärgi all :)
-     * Suunab vahelehele Edetabel
+     * Kuvab Edetabeli
      */
     private JButton btnLeaderboard;
 
@@ -83,7 +82,7 @@ public class Settings extends JPanel {
         gbc.gridwidth = 1; // Muuda tagasi üks komponent veergu
         components.add(lblCategory, gbc);
 
-        // TODO muuta JComboBox sulgude sisu
+
         // cmbCategory = new JComboBox<>(new String[]{model.getChooseCategory()}); // Teksti massiiv ühe elemendiga
         cmbCategory = new JComboBox<>(model.getCmbCategories()); // Teksti massiiv kõikide elemenidega
         gbc.gridx = 1;
@@ -118,18 +117,34 @@ public class Settings extends JPanel {
 
     // Komponentide getterid
 
+    /**
+     * Tagastab sildi, mis näitab reaalset aega.
+     * @return JLabel, mis näitab reaalset aega
+     */
     public JLabel getLblRealTime() {
         return lblRealTime;
     }
 
+    /**
+     * Tagastab kombokasti, mis sisaldab sõna kategooriaid.
+     * @return JComboBox, mis sisaldab sõna kategooriaid
+     */
     public JComboBox<String> getCmbCategory() {
         return cmbCategory;
     }
 
+    /**
+     * Tagastab nupu Uus mäng
+     * @return JButton, nupp Uus mäng
+     */
     public JButton getBtnNewGame() {
         return btnNewGame;
     }
 
+    /**
+     * Tagastab nupu Edetabel
+     * @return JButton, nupp Edetabel
+     */
     public JButton getBtnLeaderboard() {
         return btnLeaderboard;
     }

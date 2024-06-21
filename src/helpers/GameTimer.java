@@ -111,17 +111,5 @@ public class GameTimer {
         return (this.minutes * 60) + seconds;
     }
 
-    // TODO Seda meetodit ilmselt ei lähe vaja, kuid edasiarenduse eesmärgil jätame. See pole "lollikindel".
-    /**
-     * Lisada mängu ajale aega (karistus)
-     * @param seconds on täisarv (0-59)
-     */
-    public void addSeconds(int seconds) {
-        if((this.seconds + seconds) >= 60) {
-            minutes++;
-            this.seconds = (this.seconds + seconds) - 60;
-        } else {
-            this.seconds += seconds;
-        }
-    }
+
 }

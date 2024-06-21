@@ -35,6 +35,10 @@ public class Model {
     private char[] guessedChars;
     private List<Character> wrongGuesses;
 
+    /**
+     * Modeli klassi konstruktor. Loob uue mudeli ja seab andmebaasi failinime
+     * @param dbName dbName andmebaasi failinimi, mis on käsurealt saadud
+     */
     public Model(String dbName) {
         if(dbName != null) {
             this.databaseFile = dbName;  // Käsurealt saadud andmebaas kasutusel
@@ -45,6 +49,9 @@ public class Model {
         selectedCategory = chooseCategory; // Vaikimisi "Kõik kategooriad"
     }
 
+    /**
+     * Loeb võllapuu pildid kaustast ja lisab need imageFiles listi
+     */
     private void readImagesFolder() {
         /*
           Kaust, kus on võllapuu pildid
@@ -70,6 +77,10 @@ public class Model {
         this.wrongGuesses = new ArrayList<>();
     }
 
+    /**
+     * Tagastab valesti pakutud tähed stringina, eemaldades kantsulud
+     * @return Valesti pakutud tähed stringina
+     */
     public String getWrongGuessesAsString() {
         return getWrongGuesses().toString().replaceAll("[\\[\\]]", "");
     }
@@ -162,14 +173,26 @@ public class Model {
         this.dataScores = dataScores;
     }
 
-
+    /**
+     * Tagastab äraarvatud tähed
+     * @return char massiiv äraarvatud tähtedega
+     */
     public char[] getGuessedChars() {
         return guessedChars;
     }
 
+    /**
+     * Tagastab valesti pakutud tähed
+     * @return list valesti pakutud tähtedega
+     */
     public List<Character> getWrongGuesses() {
         return wrongGuesses;
     }
+
+    /**
+     * Tagastab praeguse sõna
+     * @return praegune sõna
+     */
     public String getCurrentWord() {
         return currentWord;
     }

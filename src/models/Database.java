@@ -13,9 +13,10 @@ import java.util.List;
 
 /**
  * See klass tegeleb andmebaasi ühenduse ja "igasuguste" päringutega tabelitest.
- * Alguses on ainult ühenduse jaoks funktsionaalsus
+ * See järgib Singleton mustrit, et tagada andmebaasi ühenduse ainulaadne eksemplar
  */
 public class Database {
+    private static Database instance;
     /**
      * Algselt ühendust pole
      */
@@ -29,9 +30,10 @@ public class Database {
      */
     private final Model model;
 
+
     /**
-     * Klassi andmebaas konstruktor
-     * @param model loodud mudel
+     * Database privaatne konstruktor, et rakendada Singleton mustrit.
+     * @param model Rakendusega loodud mudel
      */
     public Database(Model model) {
         this.model = model;
@@ -40,11 +42,27 @@ public class Database {
         this.selectUniqueCategories();
     }
 
+    /**
+     *
+     * @param model Rakendusega seotud mudel
+     * @return Database eksemplar
+     */
+    public static Database getInstance(Model model) {
+        if (instance == null) {
+            instance = new Database(model);
+        }
+        return instance;
+    }
+
+    /**
+     * Loob ühenduse SQLite andmebaasiga
+     * @return Ühendus andmebaasiga
+     */
     private Connection createConnection() {
         try {
             Connection conn = DriverManager.getConnection(databaseUrl);
             Statement stmt = conn.createStatement();
-            stmt.execute("PRAGMA busy_timeout = 5000");
+            stmt.execute("PRAGMA busy_timeout = 10000");
             stmt.close();
             return conn;
         } catch (SQLException e) {
@@ -52,26 +70,30 @@ public class Database {
         }
     }
 
-
     /**
-     * Loob andmebaasiga ühenduse
-     * @return andmebaasi ühenduse
+     * Saab praeguse ühenduse. Kui ühendus on suletud või null, taastatakse see.
+     * @return Praegune andmebaasi ühendus
      */
-    private Connection dbConnection() throws SQLException {
-        // https://stackoverflow.com/questions/13891006/
-        if(connection != null && !connection.isClosed()) {
-            connection.close();
+    public synchronized Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = createConnection();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to check or re-establish connection");
         }
-        connection = createConnection();
         return connection;
     }
 
+
+    /**
+     * Valib andmebaasist unikaalsed kategooriad ja uuendab mudelit nende kategooriatega
+     */
     private void selectUniqueCategories() {
         String sql = "SELECT DISTINCT(category) as category FROM words ORDER BY category;";
         List<String> categories = new ArrayList<>();  // Tühi kategooriate list
         try {
-            Connection connection = this.dbConnection();
-            Statement stmt = connection.createStatement();
+            Statement stmt = getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
@@ -89,12 +111,14 @@ public class Database {
         }
     }
 
-    public void selectScores() {
+    /**
+     * Valib edetabeli andmed andmebaasist ja uuendab mudelit nende andmetega
+     */
+    public synchronized void selectScores() {
         String sql = "SELECT * FROM scores ORDER BY gametime, playertime DESC, playername;";
         List<DataScore> data = new ArrayList<>();
         try {
-            Connection connection = this.dbConnection();
-            Statement stmt = connection.createStatement();
+            Statement stmt = getConnection().createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             model.getDataScores().clear();  // Tühjenda mudelist listi sisu
@@ -119,9 +143,9 @@ public class Database {
     }
 
     /**
-     * Andmebaasist juhuslik sõna
-     * @param category juhusliku sõna valimine andmebaasist
-     * @return väljastab juhusliku sõna
+     * Valib andmebaasist juhusliku sõna, lähtub määratud kategooriast
+     * @param category Kategooria, millest sõna valitakse
+     * @return väljastab objekti, mis sisaldab sõna ja selle kategooriat
      */
     public DataWords selectRandomWord(String category) {
         String sql = "SELECT * FROM words ";
@@ -130,8 +154,8 @@ public class Database {
         }
         sql += "ORDER BY RANDOM() LIMIT 1;";
         try {
-            Connection connection = this.dbConnection();
-            PreparedStatement pstmt = connection.prepareStatement(sql);
+
+            PreparedStatement pstmt = getConnection().prepareStatement(sql);
             if (!category.equals(model.getChooseCategory())) {
                 pstmt.setString(1, category);
             }
@@ -142,22 +166,29 @@ public class Database {
                 String wordCategory = rs.getString("category");
                 return new DataWords(id, word, wordCategory);
             }
-            connection.close();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return null;
     }
 
-    public void saveScore(String playerName, String guessWord, String wrongCharacters, int gameTime) {
+    /**
+     * Salvestab mängu andmed andmebaasi
+     * @param playerName    Mängija nimi
+     * @param guessWord     Äraarvatud sõna
+     * @param wrongCharacters   Valesti pakutud tähed
+     * @param gameTime      Mänguaeg sekundites
+     */
+    public synchronized void saveScore(String playerName, String guessWord, String wrongCharacters, int gameTime) {
         String sql = "INSERT INTO scores (playertime, playername, guessword, wrongcharacters, gametime) VALUES (?, ?, ?, ?, ?)";
         try {
-            Connection connection = this.dbConnection();
-            PreparedStatement stmt = connection.prepareStatement(sql);
+
+            PreparedStatement stmt = getConnection().prepareStatement(sql);
             stmt.setString(1, LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
             stmt.setString(2, playerName);
             stmt.setString(3, guessWord);
-            stmt.setString(4, wrongCharacters);
+            stmt.setString(4, formatWrongCharacters(wrongCharacters));
             stmt.setInt(5, gameTime);
 
             int rowsAffected = stmt.executeUpdate();
@@ -165,12 +196,19 @@ public class Database {
                 System.out.println("Data saved successfully");
             }
 
-            stmt.close();
-            connection.close();  // Close the connection
         } catch (SQLException e) {
             System.out.println("Error saving data: " + e.getMessage());
             throw new RuntimeException(e);  // Handle exception by throwing runtime exception
         }
+    }
+
+    /**
+     * Vormistab valesti pakutud tähed, teeb Array't stringi
+     * @param wrongCharacters Valesti pakutud tähed stringina
+     * @return Vormindatud string ilma kantsulgudeta.
+     */
+    private String formatWrongCharacters(String wrongCharacters) {
+        return wrongCharacters.replaceAll("[\\[\\]]", "").replaceAll(", ", ", ");
     }
 
 }

@@ -38,7 +38,9 @@ public class View extends JFrame {
      * Sellele paneelile tulevad kolm eelnevalt loodud vahelehte (Settings, GameBoard ja LeaderBoard)
      */
     private JTabbedPane tabbedPane;
-
+    /**
+     * Mänguaja objekt
+     */
     private final GameTimer gameTimer;
 
     /**
@@ -49,9 +51,9 @@ public class View extends JFrame {
         this.model = model; // MainApp-is loodud mudel
 
         setTitle("Poomismäng 2024 õpilased"); // JFrame titelriba tekst
-        setPreferredSize(new Dimension(500, 250));
-        // TODO arenduse lõpus keela akna suurendamine
-        // setResizable(false);
+        setPreferredSize(new Dimension(520, 250));
+
+        setResizable(false);
         getContentPane().setBackground(new Color(250,210,205)); // JFrame taustavärv (rõõsa)
 
         // Loome kolm vahelehte (JPanel)
@@ -70,6 +72,9 @@ public class View extends JFrame {
         realTimer.start();
     }
 
+    /**
+     * Loob tabbedPane'i kolme vahelehega: Seaded, Mängulaud, Edetabel
+     */
     private void createTabbedPanel() {
         tabbedPane = new JTabbedPane(); // Tabbed paneli loomine
 
@@ -77,8 +82,8 @@ public class View extends JFrame {
         tabbedPane.addTab("Mängulaud", gameBoard); // Vaheleht Mängulaud paneeliga gameBoard
         tabbedPane.addTab("Edetabel", leaderBoard); // Vaheleht Mängulaud paneeliga gameBoard
 
-        // TODO arenduse lõpus mängulaua vahelehte klikkida ei saa
-        // tabbedPane.setEnabledAt(1, false); // Vahelehte mängulaud ei saa klikkida
+
+        tabbedPane.setEnabledAt(1, false); // Vahelehte mängulaud ei saa klikkida
     }
 
     /**
@@ -111,10 +116,19 @@ public class View extends JFrame {
     }
 
     // GETTERID Paneelide (vahelehetede)
+
+    /**
+     * Tagastab Seaded paneeli
+     * @return Settings paneel
+     */
     public Settings getSettings() {
         return settings;
     }
 
+    /**
+     * Tagastab Mängulaud paneeli
+     * @return Mängulaud paneel
+     */
     public GameBoard getGameBoard() {
         return gameBoard;
     }
@@ -127,6 +141,9 @@ public class View extends JFrame {
         return gameTimer;
     }
 
+    /**
+     * Uuendab edetabeli tabelit andmetega mudelist
+     */
     public void updateScoresTable() {
         DefaultTableModel dtm = model.getDtm();
         dtm.setRowCount(0);

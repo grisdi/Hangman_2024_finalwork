@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
+/**
+ * Nupu Uus tegevus, mis alustab mängu
+ */
 public class ButtonNew implements ActionListener {
     static {
         Logger.getLogger((ButtonNew.class.getName()));
@@ -18,6 +21,11 @@ public class ButtonNew implements ActionListener {
     private final Model model;
     private final View view;
 
+    /**
+     * Nupu Uus konstruktor
+     * @param model Rakenduse mudel
+     * @param view Rakenduse vaade
+     */
     public ButtonNew(Model model, View view) {
         this.model = model;
         this.view = view;
@@ -38,7 +46,7 @@ public class ButtonNew implements ActionListener {
         }
 
         // TODO siit jätkub kodutöö  (umbes kaks rida koodi, üks meetod, juhusliksõna, mis andmebaasist võetakse)
-        DataWords word = new Database(model).selectRandomWord(model.getSelectedCategory());
+        DataWords word = Database.getInstance(model).selectRandomWord(model.getSelectedCategory());
         if (word != null) {
             // Initialize the game state with the new word
             model.startNewGame(word.word());

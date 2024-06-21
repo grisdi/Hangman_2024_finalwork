@@ -4,23 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c3a9a89e-df2f-41b6-935e-2b222c675b42" name="Changes" comment="Muudetud mudelit, README, Settings Database ja listud ComboboxChange.">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="c3a9a89e-df2f-41b6-935e-2b222c675b42" name="Changes" comment="Muu töötab, edetabelisse salvestamine mitte">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hangman_words_ee_test.db" beforeDir="false" afterPath="$PROJECT_DIR$/hangman_words_ee_test.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controllers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helpers/GameTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/GameTimer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/RealTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/RealTimer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/TextFieldLimit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/TextFieldLimit.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listeners/ButtonCancel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listeners/ButtonCancel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listeners/ButtonNew.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listeners/ButtonNew.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listeners/ButtonScores.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listeners/ButtonScores.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/listeners/ButtonSend.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listeners/ButtonSend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listeners/ComboboxChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listeners/ComboboxChange.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/datastructures/DataWords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/datastructures/DataWords.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/View.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/panels/GameBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/panels/GameBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/panels/LeaderBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/panels/LeaderBoard.java" afterDir="false" />
@@ -138,7 +134,7 @@
       <workItem from="1718602684651" duration="2121000" />
       <workItem from="1718630867117" duration="11081000" />
       <workItem from="1718643801874" duration="15514000" />
-      <workItem from="1718959648769" duration="8485000" />
+      <workItem from="1718959648769" duration="18359000" />
     </task>
     <task id="LOCAL−00001" summary="First Commit">
       <option name="closed" value="true" />
@@ -161,7 +157,15 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1717956015139</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Muu töötab, edetabelisse salvestamine mitte">
+      <option name="closed" value="true" />
+      <created>1718968672640</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1718968672640</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +187,7 @@
     <MESSAGE value="First Commit" />
     <MESSAGE value="README.md õigesse kohta" />
     <MESSAGE value="Muudetud mudelit, README, Settings Database ja listud ComboboxChange." />
-    <option name="LAST_COMMIT_MESSAGE" value="Muudetud mudelit, README, Settings Database ja listud ComboboxChange." />
+    <MESSAGE value="Muu töötab, edetabelisse salvestamine mitte" />
+    <option name="LAST_COMMIT_MESSAGE" value="Muu töötab, edetabelisse salvestamine mitte" />
   </component>
 </project>

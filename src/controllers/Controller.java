@@ -5,7 +5,15 @@ import models.Database;
 import models.Model;
 import views.View;
 
+/**
+ * See klass tegeleb sündmuste haldamisega ja ühendab mudeli, vaate ja kuulajate funktsionaalsuse
+ */
 public class Controller {
+    /**
+     * Konstruktor, mis loob andmebaasiühenduse, lisab erinevatele nuppudele ja sisestuskastile Listenerid
+     * @param model mudel, mis sisaldab andmeid ja rakenduse loogikat
+     * @param view vaade kuvab rakenduse kasutajaliidese
+     */
     public Controller(Model model, View view) {
         new Database(model);
 

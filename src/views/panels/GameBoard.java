@@ -8,6 +8,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Mänguvälja paigutus ja komponendid
+ */
 public class GameBoard extends JPanel {
     /**
      * Klassisisene mudel, mille väärtus saadakse View konstruktorist ja loodud MainApp-is
@@ -46,6 +49,10 @@ public class GameBoard extends JPanel {
      */
     private JLabel lblResult;
 
+    /**
+     * GameBoard klassi konstruktor. Määrab paneeli paigutus ja lisab komponendid
+     * @param model Rakenduse mudel
+     */
     public GameBoard(Model model) {
         this.model = model;
 
@@ -168,6 +175,10 @@ public class GameBoard extends JPanel {
         pnlResult.add(lblResult); // See paneel (pnlResult) on FlowLayout mitte GridBagLayout!
     }
 
+    /**
+     * Kuvab äraarvatava sõna
+     * @param word Sõna, mida kuvatakse alakriipsudena
+     */
     public void displayWord(String word) {
         StringBuilder underscores = new StringBuilder();
         for (char _ : word.toCharArray()) {
@@ -202,22 +213,42 @@ public class GameBoard extends JPanel {
 
     // Komponentide getterid
 
+    /**
+     * Tagastab mängu aja sildi
+     * @return JLabel, mis näitab mängu aega
+     */
     public JLabel getLblGameTime() {
         return lblGameTime;
     }
 
+    /**
+     * Tagastab sisestuskasti, kuhu sisestatakse täht
+     * @return JTextField, kuhu sisestatakse täht
+     */
     public JTextField getTxtChar() {
         return txtChar;
     }
 
+    /**
+     * Tagastab nupu Saada
+     * @return JButton, nupu Saada
+     */
     public JButton getBtnSend() {
         return btnSend;
     }
 
+    /**
+     * Tagastab nupu Katkesta
+     * @return JButton, nupu Katkesta
+     */
     public JButton getBtnCancel() {
         return btnCancel;
     }
 
+    /**
+     * Tagastab sildi, kuhu kuvatakse võllapuu pilt
+     * @return JLabel, kuhu kuvatakse võllapuu pilt
+     */
     public JLabel getLblImage() {
         return lblImage;
     }

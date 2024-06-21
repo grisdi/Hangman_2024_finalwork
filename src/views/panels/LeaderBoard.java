@@ -56,6 +56,9 @@ public class LeaderBoard extends JPanel {
         createLeaderBoard();  // Loob edetabeli tabeli paneelile
     }
 
+    /**
+     * Loob edetabeli koos vajalike seadistustega
+     */
     private void createLeaderBoard() {
         // Kerimisriba tabeli paremale serva, siis kui vaja
         JScrollPane sp = new JScrollPane(table);
